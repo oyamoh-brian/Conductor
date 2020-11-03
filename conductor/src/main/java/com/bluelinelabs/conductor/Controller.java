@@ -1002,7 +1002,7 @@ public abstract class Controller {
             }
 
             for (ControllerHostedRouter childRouter : childRouters) {
-                childRouter.removeHost();
+                childRouter.removeHost(false);
             }
         }
 

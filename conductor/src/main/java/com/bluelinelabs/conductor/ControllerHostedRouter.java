@@ -38,10 +38,10 @@ class ControllerHostedRouter extends Router {
 
     final void setHost(@NonNull Controller controller, @NonNull ViewGroup container) {
         if (hostController != controller || this.container != container) {
-            removeHost();
+            removeHost(false);
 
             if (container instanceof ControllerChangeListener) {
-                addChangeListener((ControllerChangeListener)container);
+                addChangeListener((ControllerChangeListener) container);
             }
 
             hostController = controller;
@@ -55,9 +55,9 @@ class ControllerHostedRouter extends Router {
         }
     }
 
-    final void removeHost() {
+    final void removeHost(boolean isConfigurationChange) {
         if (container != null && container instanceof ControllerChangeListener) {
-            removeChangeListener((ControllerChangeListener)container);
+            removeChangeListener((ControllerChangeListener) container);
         }
 
         final List<Controller> controllersToDestroy = new ArrayList<>(destroyingControllers);
@@ -73,8 +73,11 @@ class ControllerHostedRouter extends Router {
         }
 
         prepareForContainerRemoval();
-        hostController = null;
         container = null;
+
+        if (!isConfigurationChange) {
+            hostController = null;
+        }
     }
 
     final void setDetachFrozen(boolean frozen) {
@@ -129,10 +132,10 @@ class ControllerHostedRouter extends Router {
     }
 
     @Override
-    public void onActivityDestroyed(@NonNull Activity activity) {
-        super.onActivityDestroyed(activity);
+    public void onActivityDestroyed(@NonNull Activity activity, boolean isConfigurationChange) {
+        super.onActivityDestroyed(activity, isConfigurationChange);
 
-        removeHost();
+        removeHost(isConfigurationChange);
     }
 
     @Override

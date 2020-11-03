@@ -605,7 +605,7 @@ public abstract class Router {
         isActivityStopped = true;
     }
 
-    public void onActivityDestroyed(@NonNull Activity activity) {
+    public void onActivityDestroyed(@NonNull Activity activity, boolean isConfigurationChange) {
         prepareForContainerRemoval();
         changeListeners.clear();
 
@@ -613,7 +613,7 @@ public abstract class Router {
             transaction.controller().activityDestroyed(activity);
 
             for (Router childRouter : transaction.controller().getChildRouters()) {
-                childRouter.onActivityDestroyed(activity);
+                childRouter.onActivityDestroyed(activity, isConfigurationChange);
             }
         }
 
@@ -622,7 +622,7 @@ public abstract class Router {
             controller.activityDestroyed(activity);
 
             for (Router childRouter : controller.getChildRouters()) {
-                childRouter.onActivityDestroyed(activity);
+                childRouter.onActivityDestroyed(activity, isConfigurationChange);
             }
         }
 
@@ -802,7 +802,7 @@ public abstract class Router {
             if (fromController.getView() != null) {
                 fromController.detach(fromController.getView(), true, false);
             } else {
-                from.controller().destroy();
+                fromController.destroy();
             }
         }
     }
