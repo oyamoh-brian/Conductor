@@ -177,7 +177,9 @@ abstract class RouterStateAdapter(private val host: Controller) :
 
       ensurePagesSaved()
 
-      visibleRouters.remove(holder.currentItemPosition)
+      if (visibleRouters[holder.currentItemPosition] == router) {
+        visibleRouters.remove(holder.currentItemPosition)
+      }
     }
 
     holder.attached = false
