@@ -1,4 +1,4 @@
-package com.bluelinelabs.conductor.viewpager
+package com.bluelinelabs.conductor.viewpager2
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -19,7 +19,7 @@ abstract class RouterStateAdapter(private val host: Controller) :
   RecyclerView.Adapter<RouterViewHolder>(), StatefulAdapter {
 
   private var savedPages = LongSparseArray<Bundle>()
-  private var savedPageHistory = mutableListOf<Long>()
+  internal var savedPageHistory = mutableListOf<Long>()
   private var maxPagesToStateSave = Int.MAX_VALUE
   private val visibleRouters = SparseArray<Router>()
   private var currentPrimaryRouterPosition = 0
@@ -165,6 +165,10 @@ abstract class RouterStateAdapter(private val host: Controller) :
   }
 
   private fun detachRouter(holder: RouterViewHolder) {
+    if (!holder.attached) {
+      return
+    }
+
     holder.currentRouter?.let { router ->
       router.prepareForHostDetach()
 

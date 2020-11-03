@@ -1,4 +1,4 @@
-package com.bluelinelabs.conductor.viewpager
+package com.bluelinelabs.conductor.viewpager2
 
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
