@@ -73,8 +73,8 @@ public class LifecycleHandler extends Fragment implements ActivityLifecycleCallb
         if (lifecycleHandler == null) {
             lifecycleHandler = new LifecycleHandler();
             activity.getFragmentManager().beginTransaction().add(lifecycleHandler, FRAGMENT_TAG).commit();
-            lifecycleHandler.registerActivityListener(activity);
         }
+        lifecycleHandler.registerActivityListener(activity);
         return lifecycleHandler;
     }
 
